@@ -1,0 +1,59 @@
+{
+  "name": "realm-radar-canada",
+  "version": "0.1.0",
+  "private": true,
+  "description": "REALM Radar Canada — curated agricultural sales & market activity hub",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "worker:rss": "tsx workers/rss-poller.ts",
+    "worker:alerts": "tsx workers/alert-inbox.ts",
+    "worker:enrich": "tsx workers/enrichment-queue.ts",
+    "worker:digest": "tsx workers/weekly-digest.ts",
+    "worker:expire": "tsx workers/expire-listings.ts",
+    "db:migrate": "supabase db push",
+    "db:reset": "supabase db reset",
+    "seed": "tsx scripts/seed.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "@types/ws": "^8.18.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "imap-simple": "^5.1.0",
+    "leaflet": "^1.9.4",
+    "mailparser": "^3.7.1",
+    "next": "^15.0.3",
+    "openai": "^4.73.0",
+    "posthog-js": "^1.180.0",
+    "posthog-node": "^4.2.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-leaflet": "^5.0.0",
+    "resend": "^4.0.0",
+    "rss-parser": "^3.13.0",
+    "tailwind-merge": "^2.5.4",
+    "ws": "^8.20.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.21",
+    "@types/mailparser": "^3.4.5",
+    "@types/node": "^22.9.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.14.0",
+    "eslint-config-next": "^15.0.3",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.14",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,18 @@
+# Railway service config — three workers as separate services pointing to this repo.
+# Create three services in the Railway dashboard, each with the matching start command below
+# and a cron schedule. Shared env vars: SUPABASE_*, OPENAI_API_KEY, ALERT_INBOX_*, CRON_SECRET.
+
+[build]
+builder = "NIXPACKS"
+buildCommand = "npm install"
+
+[deploy]
+# Default to the RSS poller — override per-service.
+startCommand = "npm run worker:rss"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+# Suggested services + cron schedules (set in Railway UI):
+#   realm-radar-rss        →  startCommand: "npm run worker:rss"      cron: */30 * * * *
+#   realm-radar-alerts     →  startCommand: "npm run worker:alerts"   cron: */15 * * * *
+#   realm-radar-digest     →  startCommand: "npm run worker:digest"   cron: 0 13 * * 5  (Fri 8am CT = 13 UTC)

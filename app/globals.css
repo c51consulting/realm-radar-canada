@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  background: #FAF7F2;
+  color: #1F2A24;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+/* Botanical decorative flourishes (used on hero corners) */
+.flourish-bl {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 180px;
+  height: auto;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.flourish-br {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 180px;
+  height: auto;
+  opacity: 0.35;
+  pointer-events: none;
+  transform: scaleX(-1);
+}
+
+/* Field-label uppercase pattern reused across cards */
+.field-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6B7768;
+  font-weight: 500;
+}
