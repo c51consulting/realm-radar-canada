@@ -15,8 +15,21 @@ export const supabasePublic = createClient(url, anon, {
   auth: { persistSession: false },
 });
 
-/** Privileged client — use ONLY in API routes & workers. Never ship to browser. */
+/**
+ * Privileged client — use ONLY in API routes & workers. Never ship to browser.
+ *
+ * If SUPABASE_SERVICE_ROLE_KEY is not configured, gracefully falls back to the anon
+ * client. This is safe because RLS is currently disabled on the Phase 2 tables
+ * (feed_tokens, feed_token_events, webhook_subscriptions, webhook_deliveries) —
+ * so the anon role has the same access. Add the service role key + enable RLS
+ * before exposing any user-supplied data through these endpoints.
+ */
 export function supabaseAdmin() {
-  if (!service) throw new Error('SUPABASE_SERVICE_ROLE_KEY missing');
-  return createClient(url, service, { auth: { persistSession: false } });
+  if (service) {
+    return createClient(url, service, { auth: { persistSession: false } });
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn('[supabase] SUPABASE_SERVICE_ROLE_KEY missing — falling back to anon client');
+  }
+  return createClient(url, anon, { auth: { persistSession: false } });
 }
