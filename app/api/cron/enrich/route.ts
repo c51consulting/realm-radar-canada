@@ -81,7 +81,41 @@ export async function GET(req: NextRequest) {
     console.error('refresh_featured failed', e?.message);
   }
 
-  return NextResponse.json({ ok, fail, processed: (pending || []).length, published, featured });
+  // Autonomy fallback: when AI enrichment is unavailable (e.g. OPENAI_API_KEY
+  // not configured, quota exceeded), still surface parser-validated listings.
+  // Rows that came from a registered parser already have title+state+category
+  // — they're trustworthy enough to publish as market_movement signals.
+  let auto_published = 0;
+  try {
+    const { data: parserRows } = await sb
+      .from('listings')
+      .select('id, raw_title, raw_snippet')
+      .eq('status', 'new')
+      .not('state', 'is', null)
+      .not('category', 'is', null)
+      .not('raw_payload->>parser', 'is', null)
+      .lt('date_found', new Date(Date.now() - 10 * 60_000).toISOString()) // give AI a 10-min head start
+      .limit(50);
+    for (const r of parserRows || []) {
+      const { error: upErr } = await sb.from('listings').update({
+        status: 'published',
+        published_at: new Date().toISOString(),
+        clean_title: r.raw_title,
+        summary: r.raw_snippet,
+        signal_type: 'market_movement',
+        permission_level: 'public_link_only',
+        image_allowed: false,
+        featured: false,
+        priority_score: 60,
+        confidence_score: 75,
+      }).eq('id', r.id);
+      if (!upErr) auto_published++;
+    }
+  } catch (e: any) {
+    console.error('parser-autopublish failed', e?.message);
+  }
+
+  return NextResponse.json({ ok, fail, processed: (pending || []).length, published, featured, auto_published });
 }
 
 function cronAuthOk(req: NextRequest) {
