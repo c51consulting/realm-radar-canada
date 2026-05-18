@@ -9,14 +9,14 @@ export default function AffiliatePage() {
       <p className="text-realm-rust text-sm font-medium uppercase tracking-wider">Affiliate Program</p>
       <h1 className="font-serif text-4xl mt-2">List directly with REALM.</h1>
       <p className="mt-4 text-lg text-realm-ink/85 leading-relaxed">
-        REALM Radar is built to surface what is moving across the US ag market. Affiliate members get
+        REALM Radar is built to surface what is moving across the Canadian ag market. Affiliate members get
         a direct line into that signal — featured placement, lead routing, and partner visibility on
-        every relevant state and category page.
+        every relevant province and category page.
       </p>
 
       <div className="mt-10 grid md:grid-cols-3 gap-4">
         <Tier name="Affiliate" price="Free" features={['One verified org profile', 'Submit unlimited public listings', 'Standard placement in feeds']} />
-        <Tier name="Featured" price="From $99/mo" features={['Pinned placement on state pages', 'Top-of-rail Featured this week eligibility', 'Lead capture form on each listing', 'Email amplification in weekly Radar']} highlighted />
+        <Tier name="Featured" price="From $99/mo" features={['Pinned placement on province pages', 'Top-of-rail Featured this week eligibility', 'Lead capture form on each listing', 'Email amplification in weekly Radar']} highlighted />
         <Tier name="Partner" price="Custom" features={['Co-branded category page', 'Direct lead routing via API or webhook', 'REALM360 data layer access', 'Quarterly market briefings']} />
       </div>
 
@@ -30,7 +30,7 @@ export default function AffiliatePage() {
         </p>
         <ul className="mt-3 list-disc pl-5 text-sm text-realm-ink/80 space-y-1">
           <li>Organisation name + website</li>
-          <li>States and categories you operate in</li>
+          <li>Provinces and categories you operate in</li>
           <li>Typical sale volume per month</li>
           <li>Tier you&rsquo;re interested in</li>
         </ul>

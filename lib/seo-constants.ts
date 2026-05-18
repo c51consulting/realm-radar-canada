@@ -6,7 +6,9 @@
 export const CATEGORY_SLUGS = ['equipment', 'livestock', 'land', 'auctions'] as const;
 export type CategorySlug = (typeof CATEGORY_SLUGS)[number];
 
-export const STATE_SLUGS = ['texas', 'wisconsin', 'iowa', 'nebraska'] as const;
+// Phase-1 Canadian provinces for SEO landing pages. Start with the four biggest
+// ag provinces by farm-receipt value: Ontario, Saskatchewan, Alberta, Quebec.
+export const STATE_SLUGS = ['ontario', 'saskatchewan', 'alberta', 'quebec'] as const;
 export type StateSlug = (typeof STATE_SLUGS)[number];
 
 export const SLUG_REDIRECTS: Record<string, string> = {
@@ -15,29 +17,29 @@ export const SLUG_REDIRECTS: Record<string, string> = {
   farm_equipment: 'equipment',
   vehicles_transport: 'equipment',
   land_property: 'land',
-  // state code redirects (uppercase + lowercase)
-  TX: 'texas',
-  tx: 'texas',
-  WI: 'wisconsin',
-  wi: 'wisconsin',
-  IA: 'iowa',
-  ia: 'iowa',
-  NE: 'nebraska',
-  ne: 'nebraska',
+  // province code redirects (uppercase + lowercase)
+  ON: 'ontario',
+  on: 'ontario',
+  SK: 'saskatchewan',
+  sk: 'saskatchewan',
+  AB: 'alberta',
+  ab: 'alberta',
+  QC: 'quebec',
+  qc: 'quebec',
 };
 
 export const STATE_SLUG_TO_CODE: Record<StateSlug, string> = {
-  texas: 'TX',
-  wisconsin: 'WI',
-  iowa: 'IA',
-  nebraska: 'NE',
+  ontario: 'ON',
+  saskatchewan: 'SK',
+  alberta: 'AB',
+  quebec: 'QC',
 };
 
 export const STATE_SLUG_TO_LABEL: Record<StateSlug, string> = {
-  texas: 'Texas',
-  wisconsin: 'Wisconsin',
-  iowa: 'Iowa',
-  nebraska: 'Nebraska',
+  ontario: 'Ontario',
+  saskatchewan: 'Saskatchewan',
+  alberta: 'Alberta',
+  quebec: 'Quebec',
 };
 
 export const CATEGORY_SLUG_TO_LABEL: Record<CategorySlug, string> = {

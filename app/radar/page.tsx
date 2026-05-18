@@ -64,7 +64,7 @@ export default async function RadarHome({ searchParams }: { searchParams: Promis
       <section id="picks">
         <div className="mb-5 flex items-end justify-between gap-4 flex-wrap">
           <div>
-            <p className="field-label">Live across the US ag market</p>
+            <p className="field-label">Live across the Canadian ag market</p>
             <h2 className="font-serif text-3xl text-realm-forest mt-1">All activity</h2>
           </div>
           <Suspense fallback={null}>
@@ -79,7 +79,7 @@ export default async function RadarHome({ searchParams }: { searchParams: Promis
             ) : (
               <>
                 <p className="font-serif text-2xl text-realm-forest mb-2">Radar is warming up.</p>
-                <p className="text-realm-charcoal/80">We are wiring up live data feeds across the Midwest, Plains and South.<br />The first listings will land here shortly.</p>
+                <p className="text-realm-charcoal/80">We are wiring up live data feeds across the Prairies, Central, Atlantic, West and North.<br />The first listings will land here shortly.</p>
                 <p className="mt-5 text-sm"><a className="rounded-full bg-realm-forest text-realm-cream px-4 py-2 text-xs uppercase tracking-wider font-semibold hover:bg-realm-deep transition" href="/radar/submit">Submit an auction or sale</a></p>
               </>
             )}
@@ -104,14 +104,14 @@ export default async function RadarHome({ searchParams }: { searchParams: Promis
         <PromoCard
           eyebrow="For sellers"
           title="Become an affiliate"
-          body="List directly with REALM. Get featured placement, lead routing and partner visibility across state pages."
+          body="List directly with REALM. Get featured placement, lead routing and partner visibility across province pages."
           cta="Apply now"
           href="/radar/affiliate"
         />
         <PromoCard
           eyebrow="Weekly briefing"
           title="The Friday Radar email"
-          body="A 3-minute briefing of the most useful auctions, sales and signals from across the US ag market."
+          body="A 3-minute briefing of the most useful auctions, sales and signals from across the Canadian ag market."
           cta="Subscribe free"
           href="/radar/subscribe"
         />

@@ -17,8 +17,8 @@ export type ParsedListing = {
   subcategory: string | null;
 };
 
-// ---------- Phase 1 state allow-list ----------
-export const PHASE_1_STATES = new Set(['WI', 'IA', 'IL', 'MN', 'NE', 'KS', 'TX', 'OK']);
+// ---------- Phase 1 province/territory allow-list ----------
+export const PHASE_1_STATES = new Set(['BC', 'AB', 'SK', 'MB', 'ON', 'QC', 'NB', 'NS', 'PE', 'NL', 'YT', 'NT', 'NU']);
 
 // ---------- Phase 1 category allow-list ----------
 // Maps free-text source categories → normalised radar category.

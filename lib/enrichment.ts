@@ -11,7 +11,7 @@ function getClient() {
 export const EnrichmentSchema = z.object({
   clean_title: z.string(),
   state: z.string(),
-  region: z.enum(['midwest','plains','south','west','northeast','southeast','mountain','unknown']),
+  region: z.enum(['prairies','central','atlantic','west','north','unknown']),
   category: z.enum([
     'machinery','livestock','land_property','farm_equipment',
     'vehicles_transport','inputs_supplies','farm_business_opportunities',

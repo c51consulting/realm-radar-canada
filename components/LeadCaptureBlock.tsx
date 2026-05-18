@@ -4,7 +4,7 @@ export function LeadCaptureBlock() {
       <PillCard
         eyebrow="Weekly digest"
         title="Subscribe free"
-        body="Get the Friday Radar — a 3-minute briefing of curated US ag opportunities."
+        body="Get the Friday Radar — a 3-minute briefing of curated Canadian ag opportunities."
         cta="Subscribe"
         href="/radar/subscribe"
       />
@@ -18,7 +18,7 @@ export function LeadCaptureBlock() {
       <PillCard
         eyebrow="Talk to REALM"
         title="Become a partner"
-        body="Featured placement, lead routing and partner visibility across state pages."
+        body="Featured placement, lead routing and partner visibility across province pages."
         cta="Apply"
         href="/radar/affiliate"
       />

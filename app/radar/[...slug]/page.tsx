@@ -35,10 +35,10 @@ export const revalidate = 600;
 
 // Phase 1 combos enumerated explicitly to control which combos are pre-rendered.
 const PHASE_1_COMBOS: Array<[StateSlug, CategorySlug]> = [
-  ['texas', 'equipment'],
-  ['wisconsin', 'livestock'],
-  ['iowa', 'land'],
-  ['nebraska', 'auctions'],
+  ['ontario', 'equipment'],
+  ['saskatchewan', 'livestock'],
+  ['alberta', 'land'],
+  ['quebec', 'auctions'],
 ];
 
 export async function generateStaticParams() {

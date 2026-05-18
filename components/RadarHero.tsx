@@ -6,11 +6,11 @@ export function RadarHero({ newCount = 0 }: { newCount?: number } = {}) {
   return (
     <section className="relative -mx-5 mb-12 overflow-hidden md:rounded-3xl">
       <div className="relative isolate">
-        {/* Midwest hero — original commission, AI-generated for REALM Radar Canada */}
+        {/* Canadian prairies hero — original commission, AI-generated for REALM Radar Canada */}
         <div
           className="relative h-[420px] md:h-[480px] bg-cover bg-center"
           style={{
-            backgroundImage: `url('/hero/usa-midwest.png')`,
+            backgroundImage: `url('/hero/canada-prairies.png')`,
           }}
         >
           {/* Forest-green overlay */}
@@ -34,11 +34,11 @@ export function RadarHero({ newCount = 0 }: { newCount?: number } = {}) {
               )}
             </div>
             <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.05] mt-3 max-w-3xl">
-              Every US ag auction, ranch sale &amp; rural property &mdash; one curated feed.
+              Every Canadian ag auction, farm sale &amp; rural property &mdash; one curated feed.
             </h1>
             <p className="mt-5 max-w-2xl text-base md:text-lg text-realm-cream/90 leading-relaxed">
               Farmers, ranchers, dealers and brokers use REALM Radar to find what&rsquo;s moving
-              this week &mdash; from public-auction cattle and equipment to retiring-rancher
+              this week &mdash; from public-auction cattle and equipment to retiring-farmer
               land &mdash; without scrolling a hundred sale-barn websites.
             </p>
           </div>

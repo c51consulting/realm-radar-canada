@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
   const email = parsed.email.toLowerCase().trim();
   const keyword = parsed.keyword?.trim() || null;
   // Drop empty values from filters before persisting so the dedup unique index
-  // treats { state: 'TX' } and { state: 'TX', region: '' } as the same row.
+  // treats { state: 'ON' } and { state: 'ON', region: '' } as the same row.
   const filters: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(parsed.filters || {})) {
     if (v == null || v === '') continue;

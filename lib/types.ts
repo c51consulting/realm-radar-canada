@@ -15,8 +15,9 @@ export type ListingStatus =
   | 'archived'
   | 'rejected';
 
-export type UsRegion =
-  | 'midwest' | 'plains' | 'south' | 'west' | 'northeast' | 'southeast' | 'mountain';
+// Canadian regions: prairies (AB/SK/MB), central (ON/QC), atlantic (NS/NB/PE/NL), west (BC), north (YT/NT/NU)
+export type CaRegion =
+  | 'prairies' | 'central' | 'atlantic' | 'west' | 'north';
 
 export type SignalType =
   | 'opportunity' | 'market_movement' | 'partner_lead' | 'finance_trigger';
@@ -38,8 +39,8 @@ export type Listing = {
   realm_take: string | null;
   newsletter_snippet: string | null;
   linkedin_snippet: string | null;
-  state: string | null;
-  region: UsRegion | null;
+  state: string | null; // 2-letter province/territory code
+  region: CaRegion | null;
   county: string | null;
   category: string | null;
   subcategory: string | null;
@@ -67,7 +68,8 @@ export type Listing = {
   notes: string | null;
 };
 
-export const PHASE_1_STATES = ['WI', 'IA', 'IL', 'MN', 'NE', 'KS', 'TX', 'OK'] as const;
+// 13 Canadian provinces + territories, ordered geographically (West → East, then North).
+export const PHASE_1_STATES = ['BC', 'AB', 'SK', 'MB', 'ON', 'QC', 'NB', 'NS', 'PE', 'NL', 'YT', 'NT', 'NU'] as const;
 
 export const CATEGORIES = [
   { slug: 'machinery', label: 'Machinery' },
@@ -91,18 +93,25 @@ export const SOURCE_TYPES = [
 ] as const;
 
 export const REGIONS = [
-  { slug: 'midwest', label: 'Midwest' },
-  { slug: 'plains', label: 'Plains' },
-  { slug: 'south', label: 'South' },
-  { slug: 'southeast', label: 'Southeast' },
+  { slug: 'prairies', label: 'Prairies' },
+  { slug: 'central', label: 'Central' },
+  { slug: 'atlantic', label: 'Atlantic' },
   { slug: 'west', label: 'West' },
-  { slug: 'mountain', label: 'Mountain' },
-  { slug: 'northeast', label: 'Northeast' },
+  { slug: 'north', label: 'North' },
 ] as const;
 
 export const STATE_NAMES: Record<string, string> = {
-  WI: 'Wisconsin', IA: 'Iowa', IL: 'Illinois', MN: 'Minnesota',
-  NE: 'Nebraska', KS: 'Kansas', TX: 'Texas', OK: 'Oklahoma',
-  ND: 'North Dakota', SD: 'South Dakota', MO: 'Missouri', IN: 'Indiana',
-  OH: 'Ohio', MI: 'Michigan', CO: 'Colorado', MT: 'Montana',
+  BC: 'British Columbia',
+  AB: 'Alberta',
+  SK: 'Saskatchewan',
+  MB: 'Manitoba',
+  ON: 'Ontario',
+  QC: 'Quebec',
+  NB: 'New Brunswick',
+  NS: 'Nova Scotia',
+  PE: 'Prince Edward Island',
+  NL: 'Newfoundland and Labrador',
+  YT: 'Yukon',
+  NT: 'Northwest Territories',
+  NU: 'Nunavut',
 };

@@ -1,7 +1,7 @@
 export const metadata = {
   title: 'About — REALM Radar Canada',
   description:
-    'How REALM Radar curates US ag-market signal. Our stance on attribution, image rights, takedown requests, and the difference between REALM listings and third-party signal.',
+    'How REALM Radar curates Canadian ag-market signal. Our stance on attribution, image rights, takedown requests, and the difference between REALM listings and third-party signal.',
 };
 
 export default function AboutPage() {
@@ -10,8 +10,8 @@ export default function AboutPage() {
       <p className="text-realm-rust text-sm font-medium uppercase tracking-wider">About</p>
       <h1 className="font-serif text-4xl mt-2">What REALM Radar is — and isn&rsquo;t.</h1>
       <p className="mt-4 text-lg text-realm-ink/85 leading-relaxed">
-        REALM Radar is a curated index of public US agricultural-market signal — auctions,
-        dealer listings, livestock sales, and land openings — across our Phase 1 states.
+        REALM Radar is a curated index of public Canadian agricultural-market signal — auctions,
+        dealer listings, livestock sales, and land openings — across all 13 provinces and territories.
         We surface links and metadata, not full listing content. The goal is to help operators,
         investors, and partners see what is actually moving, without the noise of a generic feed.
       </p>
@@ -27,9 +27,11 @@ export default function AboutPage() {
             type. REALM-owned listings are separate and marked as such.
           </li>
           <li>
-            <strong>Phase 1 scope.</strong> We are deliberately narrow: Wisconsin, Iowa, Illinois, Minnesota,
-            Nebraska, Kansas, Texas, Oklahoma — across machinery, livestock, land, farm equipment, dealer sales,
-            clearing/retirement sales, REALM listings, and partner listings.
+            <strong>Coverage scope.</strong> All 10 Canadian provinces and 3 territories —
+            Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador,
+            Nova Scotia, Ontario, Prince Edward Island, Quebec, Saskatchewan, Yukon,
+            Northwest Territories, Nunavut — across machinery, livestock, land, farm equipment,
+            dealer sales, clearing/retirement sales, REALM listings, and partner listings.
           </li>
           <li>
             <strong>Robots and rate limits respected.</strong> We poll RSS feeds and public sitemaps that
@@ -49,7 +51,7 @@ export default function AboutPage() {
             A public RSS feed or sitemap from a verified source is polled hourly.
           </li>
           <li>
-            New URLs are matched against our Phase 1 states and categories. Out-of-scope items are dropped.
+            New URLs are matched against our Canadian provinces/territories and categories. Out-of-scope items are dropped.
           </li>
           <li>
             In-scope items are enriched: a short summary, REALM&rsquo;s commentary on why it matters, a

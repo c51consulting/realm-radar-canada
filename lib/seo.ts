@@ -3,8 +3,8 @@
  *
  * - Clean URLs are canonical: /radar/equipment, /radar/land, /radar/auctions, /radar/livestock
  * - DB slugs (machinery, land_property, etc.) redirect 301 → clean URLs via middleware
- * - State slugs use full state names (texas, wisconsin, iowa, nebraska)
- * - State codes (TX, WI, IA, NE) and aliases redirect to full names
+ * - Province slugs use full names (ontario, saskatchewan, alberta, quebec)
+ * - Province codes (ON, SK, AB, QC) and aliases redirect to full names
  */
 import { supabasePublic } from './supabase';
 import type { ListingFilters } from './queries';
@@ -196,11 +196,11 @@ export function defaultSeoBlock(
   if (pageType === 'category' && catLabel) {
     slug = parts.category!;
     h1 = `${catLabel} — REALM Radar Canada`;
-    subtitle = `Curated ${catLabel.toLowerCase()} auctions, sales and listings across the US ag market.`;
+    subtitle = `Curated ${catLabel.toLowerCase()} auctions, sales and listings across the Canadian ag market.`;
   } else if (pageType === 'state' && stateLabel) {
     slug = parts.state!;
     h1 = `${stateLabel} Ag Market Radar`;
-    subtitle = `Auctions, machinery, livestock and rural property activity tracked across ${stateLabel}.`;
+    subtitle = `Auctions, machinery, livestock and rural property activity tracked across ${stateLabel}, Canada.`;
   } else if (pageType === 'combo' && stateLabel && catLabel) {
     slug = `${parts.state}/${parts.category}`;
     h1 = `${stateLabel} ${catLabel} — REALM Radar`;
@@ -267,7 +267,7 @@ export function describeSlug(slug: string): { url: string; label: string; sub: s
     return {
       url: `/radar/${slug}`,
       label: `${CATEGORY_SLUG_TO_LABEL[slug]} — Canada`,
-      sub: `All ${CATEGORY_SLUG_TO_LABEL[slug].toLowerCase()} across the US`,
+      sub: `All ${CATEGORY_SLUG_TO_LABEL[slug].toLowerCase()} across Canada`,
     };
   }
   if (isStateSlug(slug)) {

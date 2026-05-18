@@ -25,6 +25,6 @@ insert into sources (name, kind, state, category, config, poll_interval_minutes)
   ('PEI Farm Auction', 'google_alert', 'PE', 'machinery', '{"query":"Prince Edward Island farm auction"}'::jsonb, 60),
   ('Newfoundland Farm Sale', 'google_alert', 'NL', 'machinery', '{"query":"Newfoundland farm equipment"}'::jsonb, 60),
   -- Direct sitemap polls (auction marts and dealers — populate URLs after launch)
-  ('Canadian Auction Mart Network', 'sitemap_poll', null, 'livestock', '{"sitemap_url":""}'::jsonb, 1440),
-  ('Ritchie Bros Canada', 'sitemap_poll', null, 'machinery', '{"sitemap_url":""}'::jsonb, 1440),
-  ('Realtor.ca Farmland', 'sitemap_poll', null, 'land_property', '{"sitemap_url":""}'::jsonb, 1440);
+  ('Canadian Auction Mart Network', 'manual', null, 'livestock', '{"sitemap_url":""}'::jsonb, 1440),
+  ('Ritchie Bros Canada', 'manual', null, 'machinery', '{"sitemap_url":"https://www.rbauction.ca/sitemap.xml"}'::jsonb, 1440),
+  ('Realtor.ca Farmland', 'manual', null, 'land_property', '{"sitemap_url":""}'::jsonb, 1440);

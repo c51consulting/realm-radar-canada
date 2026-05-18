@@ -46,10 +46,10 @@ const PAGES: PageSpec[] = [
   })),
   // 4 combo pages
   ...([
-    ['texas', 'equipment'],
-    ['wisconsin', 'livestock'],
-    ['iowa', 'land'],
-    ['nebraska', 'auctions'],
+    ['ontario', 'equipment'],
+    ['saskatchewan', 'livestock'],
+    ['alberta', 'land'],
+    ['quebec', 'auctions'],
   ] as Array<[StateSlug, CategorySlug]>).map(([s, c]) => ({
     slug: `${s}/${c}`,
     page_type: 'combo' as const,
@@ -60,9 +60,9 @@ const PAGES: PageSpec[] = [
   })),
 ];
 
-const SYSTEM = `You are an SEO copywriter for REALM Radar — a curation layer that tracks US agricultural auctions, machinery sales, livestock, rural property and market activity from public sources.
+const SYSTEM = `You are an SEO copywriter for REALM Radar — a curation layer that tracks Canadian agricultural auctions, machinery sales, livestock, rural property and market activity from public sources.
 
-Brand voice: practical, plain-spoken, no hype, no buzzwords. The audience is US farmers, ranchers, ag dealers, auctioneers, lenders, and investors.
+Brand voice: practical, plain-spoken, no hype, no buzzwords. The audience is Canadian farmers, ranchers, ag dealers, auctioneers, lenders, and investors.
 
 Ethics: REALM Radar links out to original sources. It does NOT republish full listings, steal images, or pretend third-party listings are REALM's. Copy must NEVER claim REALM owns or runs the underlying sales.
 
@@ -71,7 +71,7 @@ Output JSON only. No markdown fences.`;
 function userPrompt(p: PageSpec) {
   let context = '';
   if (p.page_type === 'category') {
-    context = `Page type: CATEGORY landing page for "${p.category_label}" across the entire USA. This page aggregates auctions and sales in this category from multiple states.`;
+    context = `Page type: CATEGORY landing page for "${p.category_label}" across all of Canada. This page aggregates auctions and sales in this category from multiple provinces.`;
   } else if (p.page_type === 'state') {
     context = `Page type: STATE landing page for "${p.state_label}". This page aggregates all ag market activity (auctions, machinery, livestock, land) tracked within ${p.state_label}.`;
   } else {
@@ -117,10 +117,10 @@ function buildFilters(p: PageSpec) {
   else if (p.category === 'land') category_filter.push('land_property');
   else if (p.category === 'auctions') source_type_filter.push('public_auction');
 
-  if (p.state === 'texas') state_filter.push('TX');
-  else if (p.state === 'wisconsin') state_filter.push('WI');
-  else if (p.state === 'iowa') state_filter.push('IA');
-  else if (p.state === 'nebraska') state_filter.push('NE');
+  if (p.state === 'ontario') state_filter.push('ON');
+  else if (p.state === 'saskatchewan') state_filter.push('SK');
+  else if (p.state === 'alberta') state_filter.push('AB');
+  else if (p.state === 'quebec') state_filter.push('QC');
 
   return {
     category_filter: category_filter.length ? category_filter : null,

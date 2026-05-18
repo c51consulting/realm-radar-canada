@@ -23,7 +23,7 @@ export default function PartnerFeedsPage() {
       <header className="mb-8">
         <h1 className="text-3xl font-semibold text-stone-900">Syndicating REALM Radar</h1>
         <p className="mt-2 text-stone-600">
-          REALM Radar publishes structured, filterable feeds of US agriculture opportunities.
+          REALM Radar publishes structured, filterable feeds of Canadian agriculture opportunities.
           Subscribe in any RSS reader, ingest the JSON feed into your CMS, or display latest items
           via the embed widget. Browse the full directory at{' '}
           <Link href="/feeds" className="text-emerald-700 underline">/feeds</Link>.
@@ -38,8 +38,8 @@ export default function PartnerFeedsPage() {
         <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-stone-700">
           <li><code>{SITE}/feeds/all.xml</code> — master firehose</li>
           <li><code>{SITE}/feeds/category/&lt;category&gt;.xml</code></li>
-          <li><code>{SITE}/feeds/state/&lt;state-slug-or-code&gt;.xml</code></li>
-          <li><code>{SITE}/feeds/state/&lt;state&gt;/&lt;category&gt;.xml</code> — cross-filter</li>
+          <li><code>{SITE}/feeds/state/&lt;province-slug-or-code&gt;.xml</code></li>
+          <li><code>{SITE}/feeds/state/&lt;province&gt;/&lt;category&gt;.xml</code> — cross-filter</li>
           <li><code>{SITE}/feeds/partner/&lt;scope&gt;.xml?token=&lt;your-token&gt;</code> — tokenized</li>
         </ul>
         <p className="mt-3 text-sm text-stone-600">
@@ -47,15 +47,15 @@ export default function PartnerFeedsPage() {
           <code>farm_equipment</code>, <code>land_property</code>, <code>inputs_supplies</code>.
         </p>
         <p className="mt-2 text-sm text-stone-600">
-          States accept either 2-letter codes (<code>tx</code>) or kebab-case names (<code>texas</code>,{' '}
-          <code>north-dakota</code>).
+          Provinces accept either 2-letter codes (<code>on</code>) or kebab-case names (<code>ontario</code>,{' '}
+          <code>british-columbia</code>).
         </p>
       </section>
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold text-stone-900 mb-2">Quick examples</h2>
-        <p className="text-sm text-stone-600">Fetch the Texas livestock feed via curl:</p>
-        <Code>curl {SITE}/feeds/state/texas.xml</Code>
+        <p className="text-sm text-stone-600">Fetch the Ontario livestock feed via curl:</p>
+        <Code>curl {SITE}/feeds/state/ontario.xml</Code>
         <p className="text-sm text-stone-600">Or as JSON:</p>
         <Code>curl {SITE}/feeds/category/livestock.json</Code>
       </section>
@@ -91,14 +91,14 @@ export default function PartnerFeedsPage() {
   <dc:creator>Source publication name</dc:creator>
   <source url="https://source-publication">Name</source>
   <category>livestock</category>
-  <category>TX</category>
+  <category>ON</category>
 </item>`}</Code>
       </section>
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold text-stone-900 mb-2">Want a custom slice?</h2>
         <p className="text-sm text-stone-700">
-          Need a state + category combo (e.g. Wisconsin machinery) or a tokenized partner feed?
+          Need a province + category combo (e.g. Saskatchewan machinery) or a tokenized partner feed?
           Email <a className="text-emerald-700 underline" href="mailto:partners@realmgroup.global">partners@realmgroup.global</a> —
           we add new public slices when there&apos;s confirmed demand.
         </p>

@@ -7,10 +7,10 @@ import { SiteChromeOverlays, SiteHeaderWrapper, SiteFooterWrapper, MainWrapper }
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://realmgroup.global'),
   title: { default: 'REALM Radar Canada', template: '%s | REALM Radar Canada' },
-  description: 'Curated agricultural auctions, machinery sales, livestock listings, rural property and market activity across America.',
+  description: 'Curated agricultural auctions, machinery sales, livestock listings, rural property and market activity across Canada.',
   openGraph: {
     title: 'REALM Radar Canada',
-    description: 'Track what is moving across the US agricultural market.',
+    description: 'Track what is moving across the Canadian agricultural market.',
     type: 'website',
   },
   alternates: {

@@ -39,14 +39,14 @@ export default function WebhooksPage() {
       <section className="mb-8">
         <h2 className="text-xl font-semibold text-stone-900 mb-2">Filter examples</h2>
         <p className="text-sm text-stone-600">JSON filters applied per subscription:</p>
-        <Code>{`// Texas livestock only
-{ "state": "TX", "category": "livestock" }
+        <Code>{`// Ontario livestock only
+{ "state": "ON", "category": "livestock" }
 
-// Any machinery, any state
+// Any machinery, any province
 { "category": "machinery" }
 
-// Multiple states (array = OR)
-{ "state": ["TX", "OK", "KS"] }`}</Code>
+// Multiple provinces (array = OR)
+{ "state": ["AB", "SK", "MB"] }`}</Code>
       </section>
 
       <section className="mb-8">
@@ -68,7 +68,7 @@ User-Agent: REALM-Radar-Webhook/1.0
     "source_name": "Cattle Range",
     "source_url": "https://www.cattlerange.com/…",
     "category": "livestock",
-    "state_or_region": "OK",
+    "state_or_region": "AB",
     "country": "Canada",
     "published_at": "2026-05-16T03:00:00Z"
   }

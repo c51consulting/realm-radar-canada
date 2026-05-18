@@ -1,10 +1,9 @@
 'use client';
 import { useState } from 'react';
-import { CATEGORIES } from '@/lib/types';
+import { CATEGORIES, PHASE_1_STATES, STATE_NAMES } from '@/lib/types';
 
-const US_STATES = [
-  'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
-];
+// 13 Canadian provinces + territories (codes only — order matches PHASE_1_STATES).
+const CA_PROVINCES = PHASE_1_STATES;
 
 export function SubscribeForm() {
   const [email, setEmail] = useState('');
@@ -81,10 +80,11 @@ export function SubscribeForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">States you care about <span className="text-realm-ink/50 font-normal">(optional — leave blank for all)</span></label>
+        <label className="block text-sm font-medium mb-2">Provinces &amp; territories you care about <span className="text-realm-ink/50 font-normal">(optional — leave blank for all)</span></label>
         <div className="flex flex-wrap gap-2">
-          {US_STATES.map((s) => (
+          {CA_PROVINCES.map((s) => (
             <button type="button" key={s} onClick={() => toggle(s, states, setStates)}
+              title={STATE_NAMES[s]}
               className={`px-3 py-1 rounded-full border text-xs transition ${states.includes(s) ? 'bg-realm-moss text-realm-paper border-realm-moss' : 'bg-white border-realm-line text-realm-ink/70'}`}>
               {s}
             </button>

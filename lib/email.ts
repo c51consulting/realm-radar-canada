@@ -210,7 +210,7 @@ export function weeklyDigestHtml(args: {
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="620" style="max-width:620px;background:#FFFFFF;border:1px solid #E8E0D2;border-radius:14px;padding:32px;">
           <tr><td>
             <p style="margin:0 0 8px 0;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#B2563F;font-weight:600;">REALM Radar Canada · ${escapeHtml(args.weekLabel)}</p>
-            <h1 style="margin:0 0 16px 0;font-family:Georgia,'Times New Roman',serif;font-size:26px;line-height:1.25;font-weight:500;">What’s moving across the US ag market</h1>
+            <h1 style="margin:0 0 16px 0;font-family:Georgia,'Times New Roman',serif;font-size:26px;line-height:1.25;font-weight:500;">What’s moving across the Canadian ag market</h1>
             <p style="margin:0 0 16px 0;font-size:15px;line-height:1.65;">${escapeHtml(args.intro)}</p>
             ${groupBlocks}
             <hr style="border:none;border-top:1px solid #E8E0D2;margin:28px 0;" />

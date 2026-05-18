@@ -7,13 +7,13 @@ import { SaveSearchButton } from './SaveSearchButton';
 /**
  * Context-aware filter bar.
  *
- * - On /radar (home): full filter set including state + category + region etc.
+ * - On /radar (home): full filter set including province + category + region etc.
  *   Updates query params on the current path so filters stay in scope.
- * - On a state landing page (/radar/texas): state is FIXED to that page.
- *   Other filters (category, source, timeframe, sort) refine within that state.
+ * - On a province landing page (/radar/ontario): province is FIXED to that page.
+ *   Other filters (category, source, timeframe, sort) refine within that province.
  * - On a category landing page (/radar/equipment): category is FIXED.
- *   Other filters (state, source, timeframe, sort) refine within that category.
- * - On a combo page (/radar/texas/equipment): both state + category fixed.
+ *   Other filters (province, source, timeframe, sort) refine within that category.
+ * - On a combo page (/radar/ontario/equipment): both province + category fixed.
  *   Only source, timeframe, and sort remain.
  *
  * Filter updates preserve the current pathname instead of jumping to /radar.
@@ -110,12 +110,12 @@ export function FilterBar() {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-        {/* State: shown when not locked; otherwise rendered as a "Scope" chip */}
+        {/* Province: shown when not locked; otherwise rendered as a "Scope" chip */}
         {lockedState ? (
-          <ScopeChip label="State" value={STATE_NAMES[lockedState] || lockedState} />
+          <ScopeChip label="Province" value={STATE_NAMES[lockedState] || lockedState} />
         ) : (
-          <Select label="State" value={stateFilter} onChange={(v) => update('state', v)} options={[
-            { v: '', l: 'All states' },
+          <Select label="Province" value={stateFilter} onChange={(v) => update('state', v)} options={[
+            { v: '', l: 'All provinces' },
             ...PHASE_1_STATES.map((s) => ({ v: s, l: STATE_NAMES[s] })),
           ]} />
         )}
@@ -238,10 +238,14 @@ function SortPill({ label, value, current, onClick }: { label: string; value: st
   );
 }
 
-// Detect if the landing page locks a state (state slug in seg1).
+// Detect if the landing page locks a province (province slug in seg1).
 function detectLockedState(seg1: string | undefined, seg2: string | undefined): string | null {
   const stateSlugToCode: Record<string, string> = {
-    texas: 'TX', wisconsin: 'WI', iowa: 'IA', nebraska: 'NE',
+    ontario: 'ON', saskatchewan: 'SK', alberta: 'AB', quebec: 'QC',
+    'british-columbia': 'BC', manitoba: 'MB', 'new-brunswick': 'NB',
+    'nova-scotia': 'NS', 'prince-edward-island': 'PE',
+    'newfoundland-and-labrador': 'NL', yukon: 'YT',
+    'northwest-territories': 'NT', nunavut: 'NU',
   };
   if (seg1 && stateSlugToCode[seg1]) return stateSlugToCode[seg1];
   return null;

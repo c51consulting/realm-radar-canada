@@ -17,7 +17,7 @@ const REAL_IMAGES: Record<string, { src: string; alt: string }> = {
   vehicles_transport: { src: '/cards/vehicles_transport.png', alt: 'Pickup truck and livestock trailer' },
   machinery: { src: '/cards/machinery.png', alt: 'Tractor working a field at sunset' },
   farm_equipment: { src: '/cards/farm_equipment.png', alt: 'Farm implements lined up outside a barn' },
-  land_property: { src: '/cards/land_property.png', alt: 'Midwest farmland aerial view' },
+  land_property: { src: '/cards/land_property.png', alt: 'Canadian farmland aerial view' },
   inputs_supplies: { src: '/cards/inputs_supplies.png', alt: 'Stacked sacks of farm inputs in a warehouse' },
 };
 
