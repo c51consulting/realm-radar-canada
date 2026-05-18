@@ -43,9 +43,19 @@ export async function pollOnce() {
         let subcategory: string | null = null;
 
         if (parserName) {
+          // Normalise RSS <category> array — rss-parser returns array of
+          // strings, but some feeds nest objects.
+          const rawCats = Array.isArray((item as any).categories) ? (item as any).categories : [];
+          const itemCategories: string[] = rawCats
+            .map((c: any) => (typeof c === 'string' ? c : (c && typeof c === 'object' ? (c._ || c.name || '') : '')))
+            .filter((s: string) => s && s.length);
+
           const parsed = parseByName(parserName, item.link, {
             title: item.title,
             description: item.contentSnippet || item.content || '',
+            categories: itemCategories,
+            homeState: feed.state ?? null,
+            defaultCategory: feed.category ?? null,
           });
           if (!parsed) {
             skipped++;

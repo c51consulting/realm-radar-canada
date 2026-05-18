@@ -316,13 +316,150 @@ export function parseSchraderRss(
   }
 }
 
+// ---------- Canadian Ag Publisher RSS ----------
+// Generic parser for Canadian agricultural publisher RSS feeds (Manitoba
+// Co-operator, Farmtario, Canadian Cattlemen, RealAgriculture, Country Guide,
+// Grainews, Canola Council, Cattle.ca, Farms.com).
+//
+// These are news/editorial feeds, not auction listings — but they're the most
+// reliable signal of what's moving in Canadian ag (prices, trade, weather,
+// livestock health, machinery launches). We surface them as `market_movement`
+// signals in the radar.
+//
+// Strategy:
+//   - Province: scan title + RSS categories + URL slug for province name or
+//     2-letter code. Fall back to the publisher's home province if obvious
+//     (Manitoba Co-op → MB, Farmtario → ON, Alberta Farmer → AB) — handled
+//     via the `home_state` field on the sources row.
+//   - Category: scan RSS <category> tags first (they're explicit), then title
+//     keywords. Map to our 4 canonical categories.
+//   - Reject items with no resolvable province AND no home_state fallback —
+//     prevents pan-Canadian news from polluting province filters.
+// Full province names — always safe to match anywhere.
+const CA_PROVINCE_FULL: Record<string, string> = {
+  'british columbia': 'BC',
+  'alberta': 'AB',
+  'saskatchewan': 'SK',
+  'manitoba': 'MB',
+  'ontario': 'ON',
+  'quebec': 'QC',
+  'québec': 'QC',
+  'new brunswick': 'NB',
+  'nova scotia': 'NS',
+  'prince edward island': 'PE',
+  'newfoundland and labrador': 'NL',
+  'newfoundland': 'NL',
+  'yukon': 'YT',
+  'northwest territories': 'NT',
+  'nunavut': 'NU',
+};
+
+// 2-letter codes — only match when UPPERCASE (preserves the original case).
+// This avoids "on", "in", "of" etc. matching as provinces. We check the
+// original-case text for these.
+const CA_PROVINCE_CODES: Record<string, string> = {
+  'BC': 'BC', 'AB': 'AB', 'SK': 'SK', 'MB': 'MB', 'ON': 'ON',
+  'QC': 'QC', 'NB': 'NB', 'NS': 'NS', 'PE': 'PE', 'NL': 'NL',
+  'YT': 'YT', 'NT': 'NT', 'NU': 'NU', 'PEI': 'PE',
+};
+
+function detectCaProvince(text: string): string | null {
+  if (!text) return null;
+  // Pass 1 — full name (case-insensitive), longest first
+  const low = text.toLowerCase();
+  const sortedFull = Object.keys(CA_PROVINCE_FULL).sort((a, b) => b.length - a.length);
+  for (const name of sortedFull) {
+    const re = new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+    if (re.test(low)) return CA_PROVINCE_FULL[name];
+  }
+  // Pass 2 — uppercase 2/3-letter codes only (case-sensitive)
+  for (const code of Object.keys(CA_PROVINCE_CODES)) {
+    const re = new RegExp(`\\b${code}\\b`);
+    if (re.test(text)) return CA_PROVINCE_CODES[code];
+  }
+  return null;
+}
+
+function categorizeCaItem(title: string, rssCategories: string[]): { category: string | null; subcategory: string | null } {
+  const haystack = (title + ' ' + rssCategories.join(' ')).toLowerCase();
+
+  // Livestock
+  if (/\b(cattle|beef|cow|bull|heifer|calf|calves|steer|dairy|hog|pork|pig|sheep|lamb|goat|poultry|chicken|broiler|layer)\b/.test(haystack)) {
+    let sub: string | null = null;
+    if (/\bbeef|cattle|bull|heifer|cow\b/.test(haystack)) sub = 'cattle';
+    else if (/\bdairy\b/.test(haystack)) sub = 'dairy';
+    else if (/\bhog|pork|pig\b/.test(haystack)) sub = 'pork';
+    else if (/\bpoultry|chicken|broiler|egg\b/.test(haystack)) sub = 'poultry';
+    else if (/\bsheep|lamb|goat\b/.test(haystack)) sub = 'sheep and goats';
+    return { category: 'livestock', subcategory: sub };
+  }
+
+  // Machinery — powered ag implements
+  if (/\b(tractor|combine|harvester|sprayer|seeder|planter|tillage|baler|swather|implement|machinery|equipment launch)\b/.test(haystack)) {
+    let sub: string | null = null;
+    if (/\btractor\b/.test(haystack)) sub = 'tractor';
+    else if (/\bcombine|harvester\b/.test(haystack)) sub = 'combine';
+    else if (/\bsprayer\b/.test(haystack)) sub = 'sprayer';
+    else if (/\bbaler\b/.test(haystack)) sub = 'baler';
+    return { category: 'machinery', subcategory: sub };
+  }
+
+  // Land
+  if (/\b(farmland|farm land|land sale|land prices?|land values?|acres? for sale|ranch for sale|real estate|agland)\b/.test(haystack)) {
+    return { category: 'land', subcategory: 'farmland' };
+  }
+
+  // Farm equipment — trailers, grain bins, handling, etc.
+  if (/\b(trailer|grain bin|grain handling|auger|conveyor|fertilizer spreader|grain dryer|livestock equipment|fencing)\b/.test(haystack)) {
+    return { category: 'farm_equipment', subcategory: null };
+  }
+
+  // Crops / grain news → treat as machinery-adjacent market news under farm_equipment
+  // (we surface as opportunity/market signal, not a listing of equipment)
+  if (/\b(canola|wheat|barley|oats|corn|soybean|pulse|lentil|chickpea|grain prices?|crop|harvest|seeding|fertilizer|pesticide|herbicide|weed|spray)\b/.test(haystack)) {
+    return { category: 'farm_equipment', subcategory: 'crop news' };
+  }
+
+  return { category: null, subcategory: null };
+}
+
+export function parseCanadianAgRss(
+  url: string,
+  extras?: { title?: string; description?: string; categories?: string[]; homeState?: string | null; defaultCategory?: string | null },
+): ParsedListing | null {
+  const title = (extras?.title || '').trim();
+  if (!title || !url) return null;
+
+  const categories = Array.isArray(extras?.categories) ? extras!.categories : [];
+  const hayParts = [title, extras?.description || '', categories.join(' '), url];
+  let state: string | null = null;
+  for (const part of hayParts) {
+    state = detectCaProvince(part);
+    if (state) break;
+  }
+  if (!state && extras?.homeState) state = extras.homeState;
+  if (!state) return null;
+  if (!PHASE_1_STATES.has(state)) return null;
+
+  const { category: detectedCat, subcategory } = categorizeCaItem(title, categories);
+  const category = detectedCat ?? extras?.defaultCategory ?? null;
+  if (!category) return null;
+
+  return { title, state, category, subcategory };
+}
+
 // ---------- Dispatcher ----------
-export type ParserName = 'purplewave' | 'cattlerange' | 'whitetail' | 'schrader_rss';
+export type ParserName =
+  | 'purplewave'
+  | 'cattlerange'
+  | 'whitetail'
+  | 'schrader_rss'
+  | 'canadian_ag_rss';
 
 export function parseByName(
   name: ParserName,
   url: string,
-  extras?: { title?: string; description?: string },
+  extras?: { title?: string; description?: string; categories?: string[]; homeState?: string | null; defaultCategory?: string | null },
 ): ParsedListing | null {
   switch (name) {
     case 'purplewave':
@@ -333,6 +470,8 @@ export function parseByName(
       return parseWhitetail(url);
     case 'schrader_rss':
       return parseSchraderRss(url, extras);
+    case 'canadian_ag_rss':
+      return parseCanadianAgRss(url, extras);
     default:
       return null;
   }
