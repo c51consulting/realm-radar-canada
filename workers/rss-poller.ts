@@ -95,7 +95,13 @@ export async function pollOnce() {
     }
   }
 
-  await finishRun(runId, errors.length ? 'error' : 'success', processed, errors, { inserted, skipped });
+  // Only mark the run as 'error' if MOST feeds failed (>50%), or no feeds processed at all.
+  // A handful of dead feeds shouldn't poison overall worker status — they're tracked
+  // via sources.last_polled_at + the disabled_reason field on the source itself.
+  const totalFeeds = (feeds || []).length;
+  const failedFraction = totalFeeds ? errors.length / totalFeeds : 0;
+  const isError = totalFeeds === 0 || failedFraction > 0.5;
+  await finishRun(runId, isError ? 'error' : 'success', processed, errors, { inserted, skipped, totalFeeds, failedFeeds: errors.length });
   console.log(`RSS: processed=${processed} inserted=${inserted} skipped=${skipped} errors=${errors.length}`);
   return { processed, inserted, skipped, errors, feeds: feeds?.length || 0 };
 }
